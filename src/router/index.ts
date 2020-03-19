@@ -1,28 +1,43 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from 'vue';
+import Router, { Route, RouteConfig } from 'vue-router'
+import Singer from '../components/singer/index.vue'
+import Rank from '../components/rank/index.vue'
+import Search from '../components/search/index.vue'
+import Recommend from '../components/recommend/index.vue'
 
-Vue.use(VueRouter)
+Vue.use(Router);
 
-const routes = [
+const routes: RouteConfig[] = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: '',
+    component: Recommend
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/singer',
+    name: 'Singer',
+    component: Singer
+  },
+  {
+    path: '/rank',
+    name: 'Rank',
+    component: Rank
+  },
+  {
+    path: '/search',
+    name: 'Search',
+    component: Search
+  },
+  {
+    path: '/recommend',
+    name: 'Recommend',
+    component: Recommend
   }
+
 ]
 
-const router = new VueRouter({
+const router: Router = new Router({
   mode: 'history',
-  base: process.env.BASE_URL,
   routes
 })
 
