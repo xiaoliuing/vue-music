@@ -1,11 +1,11 @@
 import { request } from '../utils/request'
 
 interface SingerITE{
-  (): Promise<any>
+  (): Promise<any>;
 }
 
 export const getSingerList: SingerITE = () => {
-  return request('/top/artists');
+  return request('/top/artists')
 }
 
 // export const getSongList: RecommendITE = () => {

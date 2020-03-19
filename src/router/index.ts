@@ -1,11 +1,11 @@
-import Vue from 'vue';
+import Vue from 'vue'
 import Router, { Route, RouteConfig } from 'vue-router'
-import Singer from '../components/singer/index.vue'
-import Rank from '../components/rank/index.vue'
-import Search from '../components/search/index.vue'
-import Recommend from '../components/recommend/index.vue'
+import Singer from '../views/singer/index.vue'
+import Rank from '../views/rank/index.vue'
+import Search from '../views/search/index.vue'
+import Recommend from '../views/recommend/index.vue'
 
-Vue.use(Router);
+Vue.use(Router)
 
 const routes: RouteConfig[] = [
   {

@@ -10,8 +10,8 @@
 
 <script>
 import { Component, Vue } from 'vue-property-decorator'
-import MHeader from './components/m-header/m-header.vue'
-import Tab from './components/tab/index.vue'
+import MHeader from './views/header/index.vue'
+import Tab from './views/tab/index.vue'
 
 @Component({
   components: {

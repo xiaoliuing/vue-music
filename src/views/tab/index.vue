@@ -23,8 +23,6 @@ export default class Tab extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-@import 'common/scss/variable.scss';
-
 .tab {
   position: fixed;
   top: 44px;

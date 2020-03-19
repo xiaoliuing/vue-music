@@ -10,8 +10,8 @@ module.exports = {
         // 向全局sass样式传入共享的全局变量, $src可以配置图片cdn前缀
         // 详情: https://cli.vuejs.org/guide/css.html#passing-options-to-pre-processor-loaders
         prependData: `
-        @import "./src/common/scss/variable.scss";
-        @import "./src/common/scss/mixin.scss";
+        @import "./src/assets/scss/variable.scss";
+        @import "./src/assets/scss/mixin.scss";
         $src: "${process.env.VUE_APP_OSS_SRC}";
         `
       }
@@ -21,7 +21,7 @@ module.exports = {
   chainWebpack: config => {
     // 添加别名
     config.resolve.alias
-      .set('common', path.resolve('./src/common'))
+      .set('assets', path.resolve('./src/assets'))
   },
   configureWebpack: {
     resolve: {

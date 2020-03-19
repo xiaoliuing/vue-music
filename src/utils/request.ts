@@ -1,12 +1,12 @@
 import axios from 'axios'
 import config from '../config'
 
-const { HOST, PORT, ERR_OK } = config;
-const baseURL: string = `${HOST}:${PORT}`;
+const { HOST, PORT, ERR_OK } = config
+const baseURL = `${HOST}:${PORT}`
 
-declare module 'axios' {  // 解决 Property 'code' does not exist on type 'AxiosResponse<any>'.错误
+declare module 'axios' { // 解决 Property 'code' does not exist on type 'AxiosResponse<any>'.错误
   interface AxiosInstance {
-    (config: AxiosRequestConfig): Promise<any>
+    (config: AxiosRequestConfig): Promise<any>;
   }
 }
 
@@ -18,10 +18,10 @@ export const request = (url: string, options?: any) => {
       url,
       ...options
     }).then(res => {
-      const { status } = res;
-      if(status === ERR_OK) {
+      const { status } = res
+      if (status === ERR_OK) {
         resolve(res)
-      }else {
+      } else {
         reject('服务器出错....')
       }
     }).catch(err => {

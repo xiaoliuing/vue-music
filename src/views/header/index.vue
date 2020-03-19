@@ -11,9 +11,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "common/scss/variable.scss";
-@import "common/scss/mixin.scss";
-
 .m-header {
   position: fixed;
   height: 44px;

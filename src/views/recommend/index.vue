@@ -19,9 +19,9 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { getBannerList, getSongList, getNewSongsList } from '../../api/recommend'
-import Banner from '../../base-components/banner/index.vue'
-import SongSheet from '../../base-components/song-sheet/index.vue'
-import NewSongs from '../../base-components/new-songs/index.vue'
+import Banner from '../../components/banner/index.vue'
+import SongSheet from '../../components/song-sheet/index.vue'
+import NewSongs from '../../components/new-songs/index.vue'
 
 @Component({
   name: 'Recommend',
@@ -63,8 +63,6 @@ export default class Recommend extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import 'common/scss/variable.scss';
-
 .recommend {
   padding-top: 10px;
   .recommend-content {
