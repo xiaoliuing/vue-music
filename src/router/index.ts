@@ -4,6 +4,7 @@ import Singer from '../views/singer/index.vue'
 import Rank from '../views/rank/index.vue'
 import Search from '../views/search/index.vue'
 import Recommend from '../views/recommend/index.vue'
+import SingerDetail from '../views/singer-detail/index.vue'
 
 Vue.use(Router)
 
@@ -16,7 +17,14 @@ const routes: RouteConfig[] = [
   {
     path: '/singer',
     name: 'Singer',
-    component: Singer
+    component: Singer,
+    children: [
+      {
+        path: 'detail/:id',
+        name: 'SingerDttail',
+        component: SingerDetail,
+      }
+    ]
   },
   {
     path: '/rank',

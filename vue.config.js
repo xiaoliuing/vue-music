@@ -25,10 +25,7 @@ module.exports = {
   },
   configureWebpack: {
     resolve: {
-      extensions: ['ts', 'vue', 'json'],
-      alias: {
-        common: path.resolve(__dirname, './src/common')
-      }
+      extensions: ['ts', 'vue', 'json']
     }
   }
 }

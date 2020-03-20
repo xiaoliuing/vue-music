@@ -1,0 +1,1 @@
+export const SET_SINGRT: string = 'SET_SINGER'

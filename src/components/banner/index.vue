@@ -154,7 +154,7 @@ export default class Banner extends Vue {
       &.active {
         width: 13px;
         border-radius: 5px;
-        background: $color-highlight-background;
+        background: $color-theme;
       }
     }
   }

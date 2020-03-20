@@ -30,11 +30,11 @@ export default class SongSheet extends Vue {
 <style lang="scss" scoped>
 .recommend-list {
   .list-title {
-    height: 65px;
-    line-height: 65px;
     font-size: $font-size-medium-x;
     color: $color-theme;
-    margin-left: 10px;
+    margin: 20px 0 20px 10px;
+    border-left: 5px solid $color-theme;
+    padding-left: 10px;
   }
   .list-wrap {
     display: flex;
