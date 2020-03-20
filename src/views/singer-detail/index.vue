@@ -10,14 +10,14 @@
       <img :src="getSinger.picUrl" alt="">
     </div>
     <scroll :data="singerSongs" @scroll="scroll" class="list" ref="list" :listenScroll="true" :probeType="3">
-      <song-list :list="singerSongs" :name="getSinger.name"></song-list>
+      <song-list :list="singerSongs" :name="getSinger.name" @onPlayer="onPlayer"></song-list>
     </scroll>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { Getter } from 'vuex-class'
+import { Getter, Action } from 'vuex-class'
 import { getSingerDetail } from '../../api/singer'
 import Scroll from '../../components/scroll/index.vue'
 import SongList from '../../components/song-list/index.vue'
@@ -32,6 +32,7 @@ import { State } from '../../store/state'
 })
 export default class SingerDetail extends Vue {
   @Getter public getSinger!: (arg: State) => {}
+  @Action public selectPlayer!: (args: any) => void
   private singerArt = {}
   private singerSongs = []
   private scrollY = 0
@@ -93,13 +94,17 @@ export default class SingerDetail extends Vue {
       })
     }
   }
+
+  public onPlayer (list: [], index: number) {
+    this.selectPlayer({ list, index })
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .singer-detail {
   position: fixed;
-  z-index: 1000;
+  z-index: 110;
   top: 0;
   left: 0;
   right: 0;

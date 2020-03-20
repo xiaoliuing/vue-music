@@ -1,7 +1,7 @@
 <template>
   <ul class="song-list">
     <div class="play"><i class="iconfont iconbofang"></i>随机播放</div>
-    <li class="song-list-item" v-for="item of list" :key="item.id">
+    <li class="song-list-item" v-for="(item, index) of list" :key="item.id" @click="player(index)">
       <h1>{{ item.name }}</h1>
       <h2>{{ name }}</h2>
     </li>
@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 
 @Component({
   name: 'SongList'
@@ -17,6 +17,15 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 export default class SongList extends Vue {
   @Prop({ type: Array, default: [] })list!: Array<{}>
   @Prop({ type: String, default: '' })name!: string
+
+  public player (index: number) {
+    this._player(index)
+  }
+
+  @Emit()
+  public _player (index: number): void {
+    this.$emit('onPlayer', this.list, index)
+  }
 }
 </script>
 

@@ -1,9 +1,21 @@
 export interface State {
-  singer: {}
+  singer: {};
+  playing: boolean;
+  fullScreen: boolean;
+  playList: Array<any>;
+  sequenceList: Array<any>;
+  mode: number;
+  currentIndex: number
 }
 
 const state: State = {
-  singer: {}
+  singer: {},
+  playing: false,
+  fullScreen: false,
+  playList: [],
+  sequenceList: [],
+  mode: 0,
+  currentIndex: -1
 }
 
 export default state

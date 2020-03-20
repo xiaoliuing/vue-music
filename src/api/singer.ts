@@ -12,6 +12,10 @@ export const getSingerDetail: SingerITE = (id: string) => {
   return request(`/artists?id=${id}`)
 }
 
+export const getSongUrl: SingerITE = (id: string) => {
+  return request(`/song/url?id=${id}`)
+}
+
 // export const getSongList: RecommendITE = () => {
 //   return request('/personalized');
 // }

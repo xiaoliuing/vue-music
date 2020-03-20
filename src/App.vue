@@ -5,6 +5,7 @@
     <keep-alive>
       <router-view class="content" />
     </keep-alive>
+    <player></player>
   </div>
 </template>
 
@@ -12,11 +13,13 @@
 import { Component, Vue } from 'vue-property-decorator'
 import MHeader from './views/header/index.vue'
 import Tab from './views/tab/index.vue'
+import Player from './components/player/index.vue'
 
 @Component({
   components: {
     MHeader,
-    Tab
+    Tab,
+    Player
   }
 })
 export default class App extends Vue {
