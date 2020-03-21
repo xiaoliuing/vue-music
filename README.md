@@ -17,7 +17,7 @@ vue使用ts相关文档: [http://bk.jzgylm.cn/frontEnd/vue-ts/](http://bk.jzgylm
 import fastclick from 'fastclick'
 
 // @ts-ignore
-fastclick.attach(document.body);
+fastclick.attach(document.body)
 ```
 2、babel-polyill：转义语法
 
