@@ -126,7 +126,6 @@ export default class Banner extends Vue {
       overflow: hidden;
       text-align: center;
       a {
-        display: flex;
         width: 100%;
         overflow: hidden;
         text-decoration: none;

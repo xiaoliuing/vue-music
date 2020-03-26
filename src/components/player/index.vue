@@ -27,6 +27,13 @@
           </div>
         </div>
         <div class="bottom">
+          <div class="progress-wrapper">
+            <span class="time time-l">{{ formatTime(currTime) }}</span>
+            <div class="progress-bar-wrapper">
+              <progress-bar :durTime="durTime" @onProgress="onProgress"></progress-bar>
+            </div>
+            <span class="time time-l">{{ formatTime(getCurrentSong.dt/1000 | 0) }}</span>
+          </div>
           <div class="operators">
             <div class="icon i-left">
               <i class="iconfont iconsort"></i>
@@ -50,7 +57,7 @@
     <transition name="mini">
       <div class="mini-player" v-show="!getFullScreen" @click="openPlayer">
         <div class="icon">
-          <img width="40" height="40" :src="getCurrentSong.al.picUrl">
+          <img width="40" height="40" :src="getCurrentSong.al.picUrl" :class="imgAnsition">
         </div>
         <div class="text">
           <h2 class="name">{{ getCurrentSong.name }}</h2>
@@ -64,20 +71,30 @@
         </div>
       </div>
     </transition>
-    <audio ref="audio" :src="url" @canplay="ready" @error="error"></audio>
+    <audio
+      ref="audio"
+      :src="url"
+      @canplay="ready"
+      @error="error"
+      @timeupdate="timeUpdate"
+    ></audio>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Getter, Action, Mutation, State } from 'vuex-class'
+import ProgressBar from '../progress/index.vue'
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import animations from 'create-keyframe-animation'
 import { getSongUrl } from '../../api/singer'
 
 @Component({
-  name: 'Player'
+  name: 'Player',
+  components: {
+    ProgressBar
+  }
 })
 export default class Player extends Vue {
   @State public currentIndex!: number
@@ -90,6 +107,8 @@ export default class Player extends Vue {
   @Mutation('SET_CURRENT_INDEX') public setCurrentIndex!: (index: number) => void
   url = ''
   songReady = false // 表示歌曲是否准备好，没有阻止用户频繁切换歌曲
+  currTime = 0 // 歌曲播放的当前时间
+  imgColor = ''
 
   $refs!: {
     cdWrapper: HTMLDivElement;
@@ -105,8 +124,14 @@ export default class Player extends Vue {
     return this.getPlaying ? 'play' : 'play pause'
   }
 
+  get durTime () {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    return ((this.currTime) / (this.getCurrentSong.dt / 1000)).toFixed(2)
+  }
+
   @Watch('getCurrentSong')
-  watchUrl () {
+  async watchUrl () {
     this._getMusicUrl()
   }
 
@@ -118,7 +143,7 @@ export default class Player extends Vue {
     }
   }
 
-  public async _getMusicUrl () {
+  public async _getMusicUrl () { // 获取歌曲url
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     const res = await getSongUrl(this.getCurrentSong.id)
@@ -128,20 +153,28 @@ export default class Player extends Vue {
     })
   }
 
-  public togglePlay () {
-    console.log(this.getPlaying)
+  public onProgress (offset: number) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    this.$refs.audio.currentTime = this.getCurrentSong.dt / 1000 * offset
+    if (!this.getPlaying) {
+      this.togglePlay()
+    }
+  }
+
+  public togglePlay () { // 播放与暂停
     this.setPlaying(!this.getPlaying)
   }
 
-  public closePlayer () {
+  public closePlayer () { // 关闭播放页
     this.updateFullScreen(false)
   }
 
-  public openPlayer () {
+  public openPlayer () { // 打开播放页
     this.updateFullScreen(true)
   }
 
-  public next () {
+  public next () { // 播放下一曲
     if (!this.songReady) {
       return
     }
@@ -156,7 +189,7 @@ export default class Player extends Vue {
     this.songReady = false
   }
 
-  public prec () {
+  public prec () { // 播放上一曲
     if (!this.songReady) {
       return
     }
@@ -171,15 +204,26 @@ export default class Player extends Vue {
     this.songReady = false
   }
 
-  public ready () {
+  public ready () { // 歌曲准备好了
     this.songReady = true
   }
 
-  public error () {
-    console.log('1111')
+  public error () { // 歌曲播放发生错误
+    this.songReady = true
   }
 
-  public enter (el: any, done: any) {
+  public timeUpdate (e: any) { // 监听播放时间
+    this.currTime = e.target.currentTime
+  }
+
+  public formatTime (time: number) {
+    const _time = time | 0
+    const m = _time / 60 | 0
+    const s = _time % 60 | 0
+    return `${m < 10 ? `0${m}` : m}:${s < 10 ? `0${s}` : s}`
+  }
+
+  public enter (el: any, done: any) { // 播放全屏页入场动画
     const { x, y, scale } = this._getPOSAndScale()
 
     const animation = {
@@ -206,19 +250,19 @@ export default class Player extends Vue {
     animations.runAnimation(this.$refs.cdWrapper, 'move', done)
   }
 
-  public afterEnter () {
+  public afterEnter () { // 播放全屏页入场完成动画
     animations.unregisterAnimation('move')
     this.$refs.cdWrapper.style.animation = ''
   }
 
-  public leave (el: any, done: any) {
+  public leave (el: any, done: any) { // 播放全屏页离场动画
     this.$refs.cdWrapper.style.transition = 'all .4s'
     const { x, y, scale } = this._getPOSAndScale()
     this.$refs.cdWrapper.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale})`
     this.$refs.cdWrapper.addEventListener('transitionend', done)
   }
 
-  public afterLeave () {
+  public afterLeave () { // 播放全屏页离场完成动画
     this.$refs.cdWrapper.style.transition = ''
     this.$refs.cdWrapper.style.transform = ''
   }
@@ -350,10 +394,10 @@ export default class Player extends Vue {
             width: 100%;
             height: 100%;
             box-sizing: border-box;
-            border: 15px solid rgba(255, 255, 255, 0.1);
+            border: 10px solid rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             &.play {
-              animation: rotate 20s linear infinite;
+              animation: rotate 40s linear infinite;
             }
             &.pause {
               animation-play-state: paused;
@@ -395,6 +439,7 @@ export default class Player extends Vue {
           }
         }
         .progress-bar-wrapper {
+          padding: 0 8px;
           flex: 1;
         }
       }
@@ -471,7 +516,7 @@ export default class Player extends Vue {
       img {
         border-radius: 50%;
         &.play {
-          animation: rotate 10s linear infinite;
+          animation: rotate 20s linear infinite;
         }
         &.pause {
           animation-play-state: paused;
@@ -539,7 +584,7 @@ export default class Player extends Vue {
     transform: rotate(0);
   }
   100% {
-    transform: rotate(180deg);
+    transform: rotate(360deg);
   }
 }
 </style>

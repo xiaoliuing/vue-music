@@ -51,6 +51,7 @@ export default class NewSongs extends Vue {
         flex-direction: row;
         img {
           width: 46px;
+          height: 46px;
           border-radius: 4px;
           margin-right: 10px;
         }
