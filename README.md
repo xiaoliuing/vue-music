@@ -1,5 +1,9 @@
 # 做一个音乐webApp
 
+在线预览：[http://xiaoliua.com:8002/](http://xiaoliua.com:8002/)
+
+进度：已完成推荐、歌手、播放
+
 ## 参考相关
 
 vue使用ts相关文档: [http://bk.jzgylm.cn/frontEnd/vue-ts/](http://bk.jzgylm.cn/frontEnd/vue-ts/)

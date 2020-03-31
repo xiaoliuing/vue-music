@@ -117,7 +117,7 @@ export default class Player extends Vue {
 
   // 定义computed
   get playClass () {
-    return this.getPlaying ? 'iconicon_zanting' : 'iconzanting1'
+    return this.getPlaying ? 'iconbofang2' : 'iconzanting2'
   }
 
   get imgAnsition () {
